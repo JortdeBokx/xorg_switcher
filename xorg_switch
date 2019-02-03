@@ -21,7 +21,7 @@ EGPU_CONFIG=/etc/X11/xorg_configs/egpu.conf
 LAPTOP_CONFIG=/etc/X11/xorg_configs/laptop.conf
 
 # The config file to be replaced
-PRODUCTION_CONFIG=/etc/X11/xorg.conf.d/90-xorg.conf
+PRODUCTION_CONFIG=/etc/X11/xorg.conf.d/95-xorg.conf
 
 # ==== End Configuration ====
 
