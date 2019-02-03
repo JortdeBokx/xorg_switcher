@@ -1,5 +1,6 @@
 # xorg_switcher
-Switches Xorg configurations depending on precense of egpu 
+Switches Xorg configurations depending on precense of egpu.
+My Xorg configuration has been included as an example, it probably won't work for you unless you change the pci id's
 
 ### Installation:
 * Clone this repository: `git clone https://github.com/JortdeBokx/xorg_switcher.git`
