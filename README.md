@@ -26,7 +26,8 @@ Have an idea or improvement? Let me know via [issues](https://github.com/JortdeB
 An issue I personally encoutered was a lot of scren tearing on manjaro xfce, here is the fix I used:
 * Add nvidia-drm.modeset=1 to GRUB_CMDLINE_LINUX_DEFAULT in `/etc/default/grub`. Then call `sudo update-grub`
 * Add the following to `~/.config/autostart/screen_tearing_fix.desktop`:
-  ```[Desktop Entry]
+  ``` Desktop
+      [Desktop Entry]
       Encoding=UTF-8
       Name=Nvidia Screen Tearing Fix
       Exec=nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 { ForceCompositionPipeline = On }"
