@@ -1,0 +1,71 @@
+#!/bin/bash
+
+# This script automatically switches xorg.conf files at boot
+# Usage: call with 'egpu' or 'laptop' as argument to switch to apropriate card 
+# and reload display manager.
+# No argumnents will switch automatically depending on precense of an egpu 
+# (defined by it's PCI ID)
+#
+# If you want to update your xorg configuration make sure you edit the original files as the
+# file in /etc/X11/xorg.conf.d will be replaced each time this script runs
+
+# ==== Begin Configuration ====
+
+# The PCI_ID of the egpu, in hexadecimal form (i.e. what is shown in lspci | grep 'VGA')
+EGPU_PCI_ID="3e:00.0"
+
+# The egpu xorg config file
+EGPU_CONFIG=/etc/X11/xorg_configs/egpu.conf
+
+# The laptop xorg config file
+LAPTOP_CONFIG=/etc/X11/xorg_configs/laptop.conf
+
+# The config file to be replaced
+PRODUCTION_CONFIG=/etc/X11/xorg.conf.d/90-xorg.conf
+
+# ==== End Configuration ====
+
+
+if [ "$(whoami)" != "root" ]; then
+ echo "Needs to be run as root"
+ exit
+fi
+
+switch_egpu (){
+    rm -f $PRODUCTION_CONFIG || true
+    cp $EGPU_CONFIG $PRODUCTION_CONFIG
+}
+
+switch_laptop (){
+    rm -f $PRODUCTION_CONFIG || true
+    cp $LAPTOP_CONFIG $PRODUCTION_CONFIG
+}
+
+confirm_and_reload(){
+    read -p "Do you want to reload the display manager? (Warning: closes all open applications) (y/N) " -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        systemctl restart display-manager.service
+    else
+        exit 0
+    fi
+}
+
+if [ "${1}" = "egpu" ]; then
+    switch_egpu
+    confirm_and_reload
+elif [ "${1}" = "laptop" ]; then
+    switch_laptop
+    confirm_and_reload
+else
+    GPU_AVAILABLE_PCI_IDS=($(lspci | grep "VGA" | grep -oP "^([[:xdigit:]]+(:|.))+"))
+    if [[ " ${GPU_AVAILABLE_PCI_IDS[*]} " == *" ${EGPU_PCI_ID} "* ]]; then 
+        # Case where EGPU cofnig is to be loaded
+        switch_egpu
+    else 
+        # Case where default laptop config is to be loaded
+        switch_laptop
+    fi
+    exit 0
+fi

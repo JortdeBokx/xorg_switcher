@@ -1,0 +1,10 @@
+[Unit]
+Description=Set the correct xorg config
+Before=xsession.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/xorg_switch
+
+[Install]
+WantedBy=default.target
