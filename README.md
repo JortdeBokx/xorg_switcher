@@ -19,4 +19,4 @@ The script should automatically select the desired xorg config file at startup. 
 If you want to switch xorg config files without restarting the system call `sudo xorg_switch laptop` or `sudo xorg_switch egpu`. Make sure you save all work before doing this as you'll need to restart your display manager.
 
 ### Contributions:
-Have an idea or improvement? I'd be happy to implement it!
+Have an idea or improvement? Let me know via issues or create a pull reqauest :)
