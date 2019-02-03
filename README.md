@@ -22,6 +22,7 @@ If you want to switch xorg config files without restarting the system call `sudo
 ### Contributions:
 Have an idea or improvement? Let me know via [issues](https://github.com/JortdeBokx/xorg_switcher/issues) or create a pull request :)
 
+## Tips for running Manjaro XFCE with nvidia graphics in an egpu
 ### Fix nvidia screen tearing on Manjaro with xfce4
 An issue I personally encoutered was a lot of scren tearing on manjaro xfce, here is the fix I used:
 * Add nvidia-drm.modeset=1 to GRUB_CMDLINE_LINUX_DEFAULT in `/etc/default/grub`. Then call `sudo update-grub`
@@ -34,3 +35,5 @@ An issue I personally encoutered was a lot of scren tearing on manjaro xfce, her
       Terminal=false
       Type=Application
     ```
+### Fix no sound via nvidia graphics card
+If you get no sound via the monitors connected to the grahpics card, disable displayport 1.2 on the monitor.
